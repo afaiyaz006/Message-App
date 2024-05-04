@@ -1,0 +1,92 @@
+<head>
+    <!-- Font Awesome -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
+  rel="stylesheet"
+/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+       
+       
+
+       document.addEventListener('DOMContentLoaded', function() {
+        const socket = io();
+        const form = document.getElementById('form');
+        const input = document.getElementById('chat');
+        const messages = document.getElementById('messages');
+
+        form.addEventListener('submit',(e)=>{
+            e.preventDefault();
+            console.log("Message sent")
+            if (input.value){
+                socket.emit('chat message',input.value);
+                input.value='';
+            }
+        });
+        socket.on('chat message', (msg) => {
+            
+            const item = document.createElement('li');
+            item.textContent = msg;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+       
+
+
+
+
+        });
+        
+      
+    </script>
+ </head>
+ <body>
+    <div class="container-fluid text-center">
+    <div class="col px-5">
+       <div class="card my-3  shadow p-3 mb-5 bg-body rounded">
+          <div class="card-header shadow-sm p-3 mb-5 bg-body rounded m-3">
+             <h3>Messages</h3>
+          </div>
+          <div class="card-body">
+             <div>
+                <div class="card-body">
+                   <h1>
+                      Messages will appear here
+                   </h1>
+                   <div class="d-flex flex-column">
+                    
+                     <ul id="messages"></ul>
+                   </div>
+                </div>
+                <form id="form">
+                <div class="d-flex flex-row">
+                    
+                      <input id="chat" class="form-control form-control-lg">
+                      <button class="btn btn-dark m-3" data-mdb-ripple-init>Send</button>
+                    
+             
+                   
+                </div>
+                </form>     
+             </div>
+           
+          </div>
+       </div>
+    </div>
+    <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"
+></script>
+ </body>
+ 
